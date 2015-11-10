@@ -15,7 +15,7 @@ using namespace std;
 
 //*******************************************************************************************************
 void canteen(int& drinks, int& thirst);
-// PreConditions:
+// PreConditions: drinks in canteen > 0
 // Postconditions:
 //
 //*******************************************************************************************************
@@ -54,18 +54,19 @@ int main()
     int drinks = 3;
     char choice;
     
-    cout << "Welcome to Camel!" << endl;
+    cout << "\nWelcome to Camel!" << endl;
     cout << "You have stolen a camel to make your way across the great Mobi desert." << endl;
     cout << "The natives want their camel back and are chasing you down! Survive your" << endl;
     cout << "desert trek and outrun the natives." << endl; 
     
     while (done == false)
     {
-        int oasis = rand()% 20 + 1;
-        int storm = rand()% 50 + 1;
+        int oasis = rand()% 50 + 1;
+        int companion = rand()% 50 + 1;
+        int storm = rand()% 25 + 1;
         int robbed = rand()% 100 + 1;
-        int shootingStar = rand()% 25 + 1;
-        int snake = rand()% 75 + 1;
+        int shootingStar = rand()% 75 + 1;
+        int snake = rand()% 40 + 1;
         
         cout << "\nA. Drink from your canteen." << endl;
         cout << "B. Ahead moderate speed." << endl;
@@ -105,44 +106,70 @@ int main()
 
         }// end switch
         
-        if(thirst > 4 && thirst <= 6)
+        if(milesTraveled >= 200)
          {
-            cout << "You're Thirsty!" << endl;
-         }
-         else if(thirst > 6)
-         {
-            cout << "You Died of Thirst!" << endl;
-            done = true;
-         } // End of thirst status check
-         
-         if(camelTiredness >= 5 && camelTiredness < 8)
-         {
-            cout << "Your Camel is Getting Tired!" << endl;
-         }
-         else if(camelTiredness > 8)
-         {
-            cout << "Your Camel is Dead!!" << endl;
-            cout << "You Couldn't Outrun the Natives!" << endl;
-            done = true;
-         }// End camelTiredness status check
-         
-         if(milesTraveled >= 200)
-         {
-            cout << "\nYou Made It Across the Dessert!" << endl;
+            cout << "\nYou Made It Across the Desert!" << endl;
             done = true;
          }// End of Winning status 
          
-         else if(milesTraveled == natives)
-         {
-            cout << "\nThe Natives Have Caught You!" << endl;
-            done = true;
-         }
-         else if(milesTraveled - natives < 15)
-         {
-            cout << "\nThe Natives Are Getting Close!" << endl;
-         }// End of Natives  status
-         
-        
+        else if
+        {
+            if(thirst > 4 && thirst <= 6)
+             {
+                cout << "/nYou're Thirsty!" << endl;
+             }
+             else if(thirst > 6)
+             {
+                cout << "You Died of Thirst!" << endl;
+                done = true;
+             } // End of thirst status check
+             
+             if(camelTiredness >= 5 && camelTiredness < 8)
+             {
+                cout << "\nYour Camel is Getting Tired!" << endl << endl;
+             }
+             else if(camelTiredness > 8)
+             {
+                cout << "Your Camel is Dead!!" << endl;
+                cout << "You Couldn't Outrun the Natives!" << endl;
+                done = true;
+             }// End camelTiredness status check
+             
+             else if(milesTraveled == natives)
+             {
+                cout << "\nThe Natives Have Caught You!" << endl;
+                done = true;
+             }
+             else if(milesTraveled - natives < 15)
+             {
+                cout << "\nThe Natives Are Getting Close!" << endl;
+             }// End of Natives  status
+             
+             if(oasis == 5)
+             {
+                cout << "Luck Is On Your Side Today. You Found an Oasis!\n All Your Supplies Have Been Replenished!" << endl;
+                drinks = 3;
+                camelTiredness = 0;
+                thirst = 0;
+             }
+             if(companion == 22)
+             {
+                cout << "\nYou Found a Gorgeous Companion at the Oasis!!" << endl;
+             }
+             if(storm == 24)
+             {
+                 cout << "\nYou Got Hit By a Sand Storm!!" << endl;
+                 thirst += rand() % 2 + 1;
+                 camelTiredness += rand() % 2 + 1;
+                 
+             }
+             if(snake == 3)
+             {
+                 camelTiredness = 5;
+                 cout << "You Got Bit by a Snake and Your Camel is Not Well Rested." << endl;
+                 cout << "What Goes Around Comes Around! Don't Steal Other People's Camels!" << endl; 
+             }
+        }
     }//end while
     cout << "\nThank You For Playing!" << endl;
     return 0;
