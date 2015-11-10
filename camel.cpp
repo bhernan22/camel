@@ -15,32 +15,45 @@ using namespace std;
 
 //*******************************************************************************************************
 void canteen(int& drinks, int& thirst);
-// PreConditions: drinks in canteen > 0
-// Postconditions:
+// PreConditions: Drinks and thirst are passed by reference while drinks > 0
+// Postconditions: Drinks will decrease by one and thirst will be reset to 0
 //
 //*******************************************************************************************************
 
 //*******************************************************************************************************
 void speed(int& milesTraveled, int& camelTiredness, int& natives, int& thirst, char);
-// PreConditions:
-// Postconditions:
+// PreConditions: Four arguments will be passed by reference. The char at the end will dictate which of two 
+// speed functions to call
+// Postconditions: Arguments will be increased or decreased depending upon which function has been called
 //
 //*******************************************************************************************************
 
 //*******************************************************************************************************
-void sleeping(int& camelTiredness, int& natives);
-// PreConditions:
-// Postconditions:
-//
+void sleeping(int& camelTiredness, int& natives, int& drinks, bool& done);
+// PreConditions: Three arguments will be called by reference
+// Postconditions: Camel tiredness will be reset. Canteen will be set to 0. Natives distance will increase depending on the random
+// generator
 //*******************************************************************************************************
 
 //*******************************************************************************************************
 void status(int milesTraveled, int drinks, int natives);
-// PreConditions:
-// Postconditions:
+// PreConditions: Three arguments will be passed by value
+// Postconditions: Function will output the values that were passed by the arguments
 //
 //*******************************************************************************************************
 
+//*******************************************************************************************************
+void levels(char level, int& drinks, int& natives);
+// PreConditions: User input is expected. Two arguments are passed by reference
+// Postconditions: Level of difficulty will be set according to user input
+//
+//*******************************************************************************************************
+
+//*******************************************************************************************************
+void levels(char level, int& oasis, int& companion, int& storm, int& luckyCharm);
+// PreConditions: User input is expected.  Four arguments will be passed by reference
+// Postconditions: Level of difficulty will be set according to user input
+//
 //*******************************************************************************************************
 
 int main()
@@ -52,21 +65,29 @@ int main()
     int camelTiredness = 0;
     int natives = -20;
     int drinks = 3;
-    char choice;
+    char choice, level;
+   
+    int oasis = rand() % 75 +1;
+    int companion = rand() % 75 +1;
+    int storm = rand() % 75 +1;
+    int luckyCharm = rand() % 75 +1;
     
     cout << "\nWelcome to Camel!" << endl;
     cout << "You have stolen a camel to make your way across the great Mobi desert." << endl;
     cout << "The natives want their camel back and are chasing you down! Survive your" << endl;
     cout << "desert trek and outrun the natives." << endl; 
     
+    cout << "\nH - Hard" << endl;
+    cout << "M - Medium" << endl;
+    cout << "E - Easy" << endl;
+    cout << "Choose a Level: ";
+    cin >> level;
+    
+    levels(level, drinks, natives);
+    
     while (done == false)
     {
-        int oasis = rand()% 50 + 1;
-        int companion = rand()% 85 + 1;
-        int storm = rand()% 25 + 1;
-        int robbed = rand()% 100 + 1;
-        int shootingStar = rand()% 75 + 1;
-        int snake = rand()% 90 + 1;
+        levels(level, oasis, companion, storm, luckyCharm);
         
         cout << "\nA. Drink from your canteen." << endl;
         cout << "B. Ahead moderate speed." << endl;
@@ -92,7 +113,7 @@ int main()
                 break;
         
              case 'D':
-                sleeping(camelTiredness, natives);
+                sleeping(camelTiredness, natives, drinks, done);
                 break;
             
             case 'E':
@@ -154,22 +175,47 @@ int main()
                 if(companion == 22)
              	{
                 	cout << "\nYou Found a Gorgeous Companion at the Oasis!!" << endl;
+                	cout << "They Have Extra Water!" << endl;
+                	drinks += 3;
              	}
              } // End of Oasis
              
              if(storm == 24)
              {
                  cout << "\nYou Got Hit By a Sand Storm!!" << endl;
+                 cout << "Your Thirst has Increased!" << endl;
+                 cout << "And Your Camel Is More Tired!" << endl;
                  thirst += rand() % 2 + 1;
                  camelTiredness += rand() % 2 + 1;  
              } // End of storm
-             
-             if(snake == 3)
+             if(luckyCharm == 13)
              {
-                 camelTiredness = 5;
-                 cout << "\nYou Got Bit by a Snake and Your Camel is Not Well Rested." << endl;
-                 cout << "What Goes Around Comes Around! Don't Steal Other People's Camels!" << endl; 
-             } // End of snake
+                cout << "\nYou Found a Lucky Charm! You Have One Wish Only So Select Wisely!" << endl;
+                cout << "N. Natives Get Pushed Back 20 Miles" << endl;
+                cout << "W. You Get Three Extra Drinks of Water" << endl;
+                cout << "R. Your Camel is Fully Rested" << endl;  
+                cout << "Your choice: ";
+                cin >> choice;
+                
+                switch(toupper(choice))
+                {
+                    case 'N': 
+                    natives = natives - 20;
+                    break;
+        
+                    case 'W':
+                    drinks += 3;
+                    break;
+            
+                    case 'R':
+                    camelTiredness = 0;
+                    break;
+                    
+                    default: cout << "\nWrong Input" << endl;
+
+                }// end switch
+             }
+             
         }
     }//end while
     cout << "\nThank You For Playing!" << endl;
@@ -214,12 +260,27 @@ void speed(int& milesTraveled, int& camelTiredness, int& natives, int& thirst, c
 }// End of speed
 
 //*******************************************************************************************************
-void sleeping(int& camelTiredness, int& natives)
+void sleeping(int& camelTiredness, int& natives, int& drinks, bool& done)
 {
+    int snake = rand()% 90 + 1;
+    int robbed = rand()% 100 + 1;
     camelTiredness = 0;
     natives += rand() % 8 + 7; 
     cout << endl;
     cout << "Your Camel is Happy!" << endl;
+    if(robbed == 48)
+    {
+        drinks = 0;
+        cout << "While You Were Resting Karma Paid a Visit!" << endl;
+        cout << "Someone Stole Your Camel and Water!  Game Over!" << endl;
+        done = true;
+    }
+    if(snake == 3)
+        {
+            camelTiredness = 5;
+            cout << "\nYou Got Bit by a Snake and Your Camel is Not Well Rested." << endl;
+            cout << "What Goes Around Comes Around! Don't Steal Other People's Camels!" << endl; 
+        } // End of snake
     
     return;
 }// End of sleeping
@@ -232,3 +293,41 @@ void status(int milesTraveled, int drinks, int natives)
    cout << "The Natives are " << milesTraveled - natives << " Miles Behind You!" << endl;
     return;
 } // End of status
+void levels(char level, int& drinks, int& natives )
+{
+    switch(toupper(level))
+    {
+        case 'H':drinks = 2;
+                 natives = -10;
+                 break;
+        case 'M':drinks = 3;
+                 break;
+        case 'E':drinks = 6;
+                 natives = -30;
+                 break;
+    }
+}// End of Levels
+void levels(char level, int& oasis, int& companion, int& storm, int& luckyCharm)
+{
+    switch(toupper(level))
+    {
+        case 'H':
+                 oasis = rand() % 150 +1;
+                 companion = rand() % 200 + 1;
+                 storm = rand() % 25 + 1;
+                 luckyCharm = rand() % 100 + 1; 
+                 break;
+        case 'M':
+                 oasis = rand() % 100 +1;
+                 companion = rand() % 100 + 1;
+                 storm = rand() % 50 + 1;
+                 luckyCharm = rand() % 75 + 1; 
+                 break;
+        case 'E':
+                oasis = rand() % 50 +1;
+                companion = rand() % 30 + 1;
+                storm = rand() % 100 + 1;
+                luckyCharm = rand() % 25 + 1; 
+                break;
+    }
+}
