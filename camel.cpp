@@ -62,11 +62,11 @@ int main()
     while (done == false)
     {
         int oasis = rand()% 50 + 1;
-        int companion = rand()% 50 + 1;
+        int companion = rand()% 85 + 1;
         int storm = rand()% 25 + 1;
         int robbed = rand()% 100 + 1;
         int shootingStar = rand()% 75 + 1;
-        int snake = rand()% 40 + 1;
+        int snake = rand()% 90 + 1;
         
         cout << "\nA. Drink from your canteen." << endl;
         cout << "B. Ahead moderate speed." << endl;
@@ -112,11 +112,11 @@ int main()
             done = true;
          }// End of Winning status 
          
-        else if
+        else if(milesTraveled < 200)
         {
             if(thirst > 4 && thirst <= 6)
              {
-                cout << "/nYou're Thirsty!" << endl;
+                cout << "\nYou're Thirsty!" << endl;
              }
              else if(thirst > 6)
              {
@@ -126,7 +126,7 @@ int main()
              
              if(camelTiredness >= 5 && camelTiredness < 8)
              {
-                cout << "\nYour Camel is Getting Tired!" << endl << endl;
+                cout << "\nYour Camel is Getting Tired!" << endl;
              }
              else if(camelTiredness > 8)
              {
@@ -151,24 +151,25 @@ int main()
                 drinks = 3;
                 camelTiredness = 0;
                 thirst = 0;
-             }
-             if(companion == 22)
-             {
-                cout << "\nYou Found a Gorgeous Companion at the Oasis!!" << endl;
-             }
+                if(companion == 22)
+             	{
+                	cout << "\nYou Found a Gorgeous Companion at the Oasis!!" << endl;
+             	}
+             } // End of Oasis
+             
              if(storm == 24)
              {
                  cout << "\nYou Got Hit By a Sand Storm!!" << endl;
                  thirst += rand() % 2 + 1;
-                 camelTiredness += rand() % 2 + 1;
-                 
-             }
+                 camelTiredness += rand() % 2 + 1;  
+             } // End of storm
+             
              if(snake == 3)
              {
                  camelTiredness = 5;
-                 cout << "You Got Bit by a Snake and Your Camel is Not Well Rested." << endl;
+                 cout << "\nYou Got Bit by a Snake and Your Camel is Not Well Rested." << endl;
                  cout << "What Goes Around Comes Around! Don't Steal Other People's Camels!" << endl; 
-             }
+             } // End of snake
         }
     }//end while
     cout << "\nThank You For Playing!" << endl;
